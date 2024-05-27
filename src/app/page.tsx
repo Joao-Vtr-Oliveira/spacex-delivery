@@ -1,5 +1,13 @@
+'use client'
+
+import { Card, CardHeader } from '@chakra-ui/react'
+
 export default function Home() {
   return (
-    <h1>Hello world!</h1>
+    <Card>
+      <CardHeader>
+        Hello world!
+      </CardHeader>
+    </Card>
   )
 }
