@@ -6,7 +6,7 @@ import React, { ReactNode, useState } from "react";
 
 type MarsContextType = {
   locations: marsLocationType[];
-  addLocation: (location: marsLocationType) => void;
+  addLocation: (code: string) => void;
   deleteLocation: (index: number) => void;
 };
 
@@ -19,8 +19,9 @@ export const MarsContext = React.createContext<MarsContextType | undefined>(unde
 export function MarsProvider({ children }: MarsContextProviderProps) {
   const [locations, setLocations] = useState<marsLocationType[]>(marsDeliveryLocations);
 
-  function addLocation(location: marsLocationType) {
-    setLocations([...locations, location]);
+  function addLocation(code: string) {
+    const newLocation: marsLocationType = {id: locations.length, code}
+    setLocations([...locations, newLocation]);
   }
 
   function deleteLocation(index: number) {
