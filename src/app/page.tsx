@@ -27,14 +27,14 @@ export default function Home() {
 					<ul>
 						{marsContext.locations.map((location, index) => (
 							<li key={index}>
-								ID: {index}, Code: {location.code}
+								Name: {location.name}, Code: {location.code}
 								<Button size={'sm'} onClick={() => marsContext.deleteLocation(index)}>
 									Delete
 								</Button>
 							</li>
 						))}
 					</ul>
-					<Button size={'sm'} onClick={() => marsContext.addLocation({code: 'NEW-LOCATION'})}>
+					<Button size={'sm'} onClick={() => marsContext.addLocation({name: 'Location name', code: 'NEW-LOCATION'})}>
 						Add New Location
 					</Button>
 				</CardBody>
@@ -47,7 +47,7 @@ export default function Home() {
 					<ul>
 						{earthContext.locations.map((location, index) => (
 							<li key={index}>
-								ID: {index}, Address: {location.addressLine}
+								Name: {location.name}, Address: {location.addressLine}
 								<Button size={'sm'} onClick={() => earthContext.deleteLocation(index)}>Delete</Button>
 							</li>
 						))}
@@ -56,6 +56,7 @@ export default function Home() {
             size={'sm'}
 						onClick={() =>
 							earthContext.addLocation({
+                name: 'Location name',
 								country: 'New Country',
 								addressLine: 'New Address',
 								city: 'New City',
