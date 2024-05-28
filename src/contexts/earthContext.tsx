@@ -6,7 +6,7 @@ import React, { ReactNode, useState } from "react";
 
 type EarthContextType = {
   locations: earthLocationType[];
-  addLocation: (location: earthLocationType) => void;
+  addLocation: (location: Omit<earthLocationType, 'id'>) => void;
   deleteLocation: (index: number) => void;
 };
 
@@ -19,8 +19,9 @@ export const EarthContext = React.createContext<EarthContextType | undefined>(un
 export function EarthProvider({ children }: EarthContextProviderProps) {
   const [locations, setLocations] = useState<earthLocationType[]>(earthDeliveryLocations);
 
-  function addLocation(location: earthLocationType) {
-    setLocations([...locations, location]);
+  function addLocation(location: Omit<earthLocationType, 'id'>) {
+    const newLocation: earthLocationType = {id: Date.now(), ...location}
+    setLocations([...locations, newLocation]);
   }
 
   function deleteLocation(index: number) {
