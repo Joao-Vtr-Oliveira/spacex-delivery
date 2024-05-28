@@ -7,10 +7,12 @@ import {
 	Button,
 	Card,
 	CardBody,
+	CardFooter,
 	CardHeader,
 	Heading,
 	Text,
 } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 
 const HomePage = () => {
@@ -19,6 +21,7 @@ const HomePage = () => {
 
 	const marsContext = useContext(MarsContext);
 	const earthContext = useContext(EarthContext);
+	const { push } = useRouter();
 
 	if (!marsContext || !earthContext) {
 		throw new Error('An error ocorred.');
@@ -30,7 +33,7 @@ const HomePage = () => {
 				<Heading fontFamily='monospace'>Address list</Heading>
 				<hr />
 			</CardHeader>
-			<CardBody>
+			<CardBody overflow='auto'>
 				<Box display='flex' justifyContent='center' gap={2}>
 					<Button
 						isDisabled={page}
@@ -48,7 +51,11 @@ const HomePage = () => {
 					</Button>
 				</Box>
 				<Heading textAlign='center' mt={5} mb={5} size={'lg'}>
-					<Box as='span' textDecoration='underline' textColor={page ? 'green' : 'orange'}>
+					<Box
+						as='span'
+						textDecoration='underline'
+						textColor={page ? 'green' : 'orange'}
+					>
 						{page ? 'Earth' : 'Mars'}
 					</Box>{' '}
 					List
@@ -58,7 +65,7 @@ const HomePage = () => {
 						display='flex'
 						flexDir='column'
 						alignItems='center'
-						overflow='auto'
+						className='border border-red'
 					>
 						{earthContext.locations.map((location, index) => (
 							<Box
@@ -166,6 +173,14 @@ const HomePage = () => {
 					</Box>
 				)}
 			</CardBody>
+			<CardFooter display='flex' justifyContent='end'>
+				<Button
+					colorScheme='purple'
+					onClick={page ? () => push('/earth/new') : () => push('/mars/new')}
+				>
+					Add new {page ? 'Earth' : 'Mars'} location
+				</Button>
+			</CardFooter>
 		</Card>
 	);
 };
