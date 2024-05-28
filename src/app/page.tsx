@@ -13,7 +13,6 @@ export default function Home() {
 		throw new Error('useMarsContext must be used within a MarsProvider. Or error in earthContext.');
 	}
 
-	// const { locations, addLocation, deleteLocation } = marsContext;
 
 	console.log(marsContext.locations);
 	console.log(earthContext.locations);
@@ -28,14 +27,14 @@ export default function Home() {
 					<ul>
 						{marsContext.locations.map((location, index) => (
 							<li key={index}>
-								ID: {location.id}, Code: {location.code}
+								ID: {index}, Code: {location.code}
 								<Button size={'sm'} onClick={() => marsContext.deleteLocation(index)}>
 									Delete
 								</Button>
 							</li>
 						))}
 					</ul>
-					<Button size={'sm'} onClick={() => marsContext.addLocation('NEW_CODE')}>
+					<Button size={'sm'} onClick={() => marsContext.addLocation({code: 'NEW-LOCATION'})}>
 						Add New Location
 					</Button>
 				</CardBody>
@@ -48,7 +47,7 @@ export default function Home() {
 					<ul>
 						{earthContext.locations.map((location, index) => (
 							<li key={index}>
-								ID: {location.id}, Address: {location.addressLine}
+								ID: {index}, Address: {location.addressLine}
 								<Button size={'sm'} onClick={() => earthContext.deleteLocation(index)}>Delete</Button>
 							</li>
 						))}
