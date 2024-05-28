@@ -31,10 +31,7 @@ const HomePage = () => {
 		<Card w={['100%', '100%', '100%', '80%', '90%', '60%']} h={['100%', '90%']}>
 			<CardHeader textAlign='center'>
 				<Heading fontFamily='monospace'>Address list</Heading>
-				<hr />
-			</CardHeader>
-			<CardBody overflow='auto'>
-				<Box display='flex' justifyContent='center' gap={2}>
+				<Box display='flex' justifyContent='center' mb={5} gap={2}>
 					<Button
 						isDisabled={page}
 						colorScheme='green'
@@ -50,6 +47,9 @@ const HomePage = () => {
 						Mars
 					</Button>
 				</Box>
+				<hr />
+			</CardHeader>
+			<CardBody overflow='auto'>
 				<Heading textAlign='center' mt={5} mb={5} size={'lg'}>
 					<Box
 						as='span'

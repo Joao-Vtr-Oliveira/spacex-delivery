@@ -1,6 +1,5 @@
 
 import AddNewEarthLocationPage from '@/pagesComponents/AddNewEarthLocationPage';
-import HomePage from '@/pagesComponents/homePage';
 import { Box, Button, Card, CardBody, CardHeader } from '@chakra-ui/react';
 import { Metadata } from 'next';
 
