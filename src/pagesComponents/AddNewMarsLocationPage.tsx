@@ -30,6 +30,7 @@ const AddNewMarsLocationPage = () => {
 					value={location.name}
 					textAlign='center'
 					onChange={(e) => setLocation({ ...location, name: e.target.value })}
+					required
 				/>
 			</Box>
 			<Box mb={5}>
@@ -40,6 +41,7 @@ const AddNewMarsLocationPage = () => {
 					value={location.code}
 					textAlign='center'
 					onChange={(e) => setLocation({ ...location, code: e.target.value })}
+					required
 				/>
 			</Box>
 			<Box display='flex' justifyContent='center' gap={3}>

@@ -37,6 +37,7 @@ const AddNewEarthLocationPage = () => {
 					value={location.name}
 					textAlign='center'
 					onChange={(e) => setLocation({ ...location, name: e.target.value })}
+					required
 				/>
 			</Box>
 			<Box mb={5}>
@@ -49,6 +50,7 @@ const AddNewEarthLocationPage = () => {
 					onChange={(e) =>
 						setLocation({ ...location, addressLine: e.target.value })
 					}
+					required
 				/>
 			</Box>
 			<Box mb={5}>
@@ -61,6 +63,7 @@ const AddNewEarthLocationPage = () => {
 					onChange={(e) =>
 						setLocation({ ...location, country: e.target.value })
 					}
+					required
 				/>
 			</Box>
 			<Box mb={5}>
@@ -71,6 +74,7 @@ const AddNewEarthLocationPage = () => {
 					value={location.state}
 					textAlign='center'
 					onChange={(e) => setLocation({ ...location, state: e.target.value })}
+					required
 				/>
 			</Box>
 			<Box mb={5}>
@@ -81,6 +85,7 @@ const AddNewEarthLocationPage = () => {
 					value={location.city}
 					textAlign='center'
 					onChange={(e) => setLocation({ ...location, city: e.target.value })}
+					required
 				/>
 			</Box>
 			<Box mb={5}>
@@ -93,6 +98,7 @@ const AddNewEarthLocationPage = () => {
 					onChange={(e) =>
 						setLocation({ ...location, zipCode: e.target.value })
 					}
+					required
 				/>
 			</Box>
 			<Box display='flex' justifyContent='center' gap={3}>
