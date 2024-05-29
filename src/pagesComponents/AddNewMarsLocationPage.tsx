@@ -3,7 +3,8 @@ import { MarsContext } from '@/contexts/marsContext';
 import { marsLocationType } from '@/types/marsLocationType';
 import { checkMarsFields } from '@/utils/checkFields';
 import { marsLocationBase } from '@/utils/marsLocationBase';
-import { Box, Button, Heading, Input } from '@chakra-ui/react';
+import toastHelper from '@/utils/toastHelper';
+import { Box, Button, Heading, Input, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 
@@ -13,11 +14,14 @@ const AddNewMarsLocationPage = () => {
 	const { push } = useRouter();
 	const marsContext = useContext(MarsContext);
 
+	const toast = useToast();
+
 	const addLocation = () => {
 		const check = checkMarsFields(location);
-		if (!check) return alert('Please, fill all the fields');
-		if(location.code.length > 4) return alert('The code must have 4 chars.');
+		if (!check) return toast(toastHelper('blankFields'));
+		if(location.code.length !== 4) return toast(toastHelper('wrongCode'));
 		marsContext?.addLocation(location);
+		toast(toastHelper('added'));
 		push('/');
 	};
 
