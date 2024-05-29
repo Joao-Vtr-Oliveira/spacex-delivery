@@ -4,7 +4,17 @@ import { marsLocationType } from '@/types/marsLocationType';
 import { checkMarsFields } from '@/utils/checkFields';
 import { marsLocationBase } from '@/utils/marsLocationBase';
 import toastHelper from '@/utils/toastHelper';
-import { Box, Button, Heading, Input, useToast } from '@chakra-ui/react';
+import {
+	Box,
+	Button,
+	Card,
+	CardBody,
+	CardFooter,
+	CardHeader,
+	Heading,
+	Input,
+	useToast,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 
@@ -19,48 +29,64 @@ const AddNewMarsLocationPage = () => {
 	const addLocation = () => {
 		const check = checkMarsFields(location);
 		if (!check) return toast(toastHelper('blankFields'));
-		if(location.code.length !== 4) return toast(toastHelper('wrongCode'));
+		if (location.code.length !== 4) return toast(toastHelper('wrongCode'));
 		marsContext?.addLocation(location);
 		toast(toastHelper('added'));
 		push('/');
 	};
 
 	return (
-		<Box>
-			<Heading textAlign='center' mb={10}>
-				New Mars Location:
-			</Heading>
-			<Box mb={5}>
-				<Heading textAlign='center' mb={3} size='md'>
-					Name
-				</Heading>
-				<Input
-					value={location.name}
-					textAlign='center'
-					onChange={(e) => setLocation({ ...location, name: e.target.value })}
-					required
-				/>
+		<Card w={['100vw', '70vw', '60%', '50%', '40%']} h={['60vh', '50%']}>
+			<Box>
+				<CardHeader>
+					<Heading textAlign='center' fontFamily='monospace' mb={10}>
+						New Mars Location:
+					</Heading>
+				</CardHeader>
+				<CardBody>
+					<Box mb={5}>
+						<Heading textAlign='center' mb={3} size='md'>
+							Name
+						</Heading>
+						<Input
+							value={location.name}
+							textAlign='center'
+							onChange={(e) =>
+								setLocation({ ...location, name: e.target.value })
+							}
+							required
+						/>
+					</Box>
+					<Box mb={5}>
+						<Heading textAlign='center' mb={3} size='md'>
+							Code
+						</Heading>
+						<Input
+							value={location.code}
+							textAlign='center'
+							onChange={(e) =>
+								setLocation({ ...location, code: e.target.value })
+							}
+							required
+						/>
+					</Box>
+				</CardBody>
+				<CardFooter display='flex' justifyContent='center'>
+					<Box display='flex' justifyContent='center' gap={3}>
+						<Button
+							colorScheme='green'
+							isDisabled={!checkMarsFields(location)}
+							onClick={addLocation}
+						>
+							Add Location
+						</Button>
+						<Button colorScheme='red' onClick={() => push('/')}>
+							Cancel
+						</Button>
+					</Box>
+				</CardFooter>
 			</Box>
-			<Box mb={5}>
-				<Heading textAlign='center' mb={3} size='md'>
-					Code
-				</Heading>
-				<Input
-					value={location.code}
-					textAlign='center'
-					onChange={(e) => setLocation({ ...location, code: e.target.value })}
-					required
-				/>
-			</Box>
-			<Box display='flex' justifyContent='center' gap={3}>
-				<Button colorScheme='green' isDisabled={!checkMarsFields(location)} onClick={addLocation}>
-					Add Location
-				</Button>
-				<Button colorScheme='red' onClick={() => push('/')}>
-					Cancel
-				</Button>
-			</Box>
-		</Box>
+		</Card>
 	);
 };
 
