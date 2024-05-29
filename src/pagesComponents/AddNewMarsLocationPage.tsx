@@ -2,6 +2,7 @@
 import { MarsContext } from '@/contexts/marsContext';
 import { marsLocationType } from '@/types/marsLocationType';
 import { checkMarsFields } from '@/utils/checkFields';
+import { checkCode } from '@/utils/checkInfo';
 import { marsLocationBase } from '@/utils/marsLocationBase';
 import toastHelper from '@/utils/toastHelper';
 import {
@@ -23,6 +24,7 @@ const AddNewMarsLocationPage = () => {
 
 	const { push } = useRouter();
 	const marsContext = useContext(MarsContext);
+	if(!marsContext) return 'error';
 
 	const toast = useToast();
 
@@ -30,6 +32,7 @@ const AddNewMarsLocationPage = () => {
 		const check = checkMarsFields(location);
 		if (!check) return toast(toastHelper('blankFields'));
 		if (location.code.length !== 4) return toast(toastHelper('wrongCode'));
+		if(checkCode(marsContext?.locations, location.code)) return toast(toastHelper('codeInUse'));
 		marsContext?.addLocation(location);
 		toast(toastHelper('added'));
 		push('/');
