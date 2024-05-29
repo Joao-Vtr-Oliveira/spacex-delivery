@@ -8,6 +8,7 @@ type EarthContextType = {
   locations: earthLocationType[];
   addLocation: (location: Omit<earthLocationType, 'id'>) => void;
   deleteLocation: (index: number) => void;
+  updateLocation: (id: number, udpatedLocation: Omit<earthLocationType, 'id'>) => void;
 };
 
 type EarthContextProviderProps = {
@@ -28,12 +29,19 @@ export function EarthProvider({ children }: EarthContextProviderProps) {
     setLocations(locations.filter((_, i) => i !== index));
   }
 
+  function updateLocation(id: number, updatedLocation: Omit<earthLocationType, 'id'>) {
+    setLocations(locations.map(location => 
+      location.id === id ? { ...location, ...updatedLocation } : location
+    ));
+  }
+
   return (
     <EarthContext.Provider
       value={{
         locations,
         addLocation,
         deleteLocation,
+        updateLocation
       }}
     >
       {children}
