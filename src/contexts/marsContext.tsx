@@ -6,8 +6,9 @@ import React, { ReactNode, useState } from "react";
 
 type MarsContextType = {
   locations: marsLocationType[];
-  addLocation: (location: marsLocationType) => void;
+  addLocation: (location: Omit<marsLocationType, 'id'>) => void;
   deleteLocation: (index: number) => void;
+  updateLocation: (id: number, udpatedLocation: Omit<marsLocationType, 'id'>) => void;
 };
 
 type MarsContextProviderProps = {
@@ -19,12 +20,19 @@ export const MarsContext = React.createContext<MarsContextType | undefined>(unde
 export function MarsProvider({ children }: MarsContextProviderProps) {
   const [locations, setLocations] = useState<marsLocationType[]>(marsDeliveryLocations);
 
-  function addLocation(location: marsLocationType) {
-    setLocations([...locations, location]);
+  function addLocation(location: Omit<marsLocationType, 'id'>) {
+    const newLocation: marsLocationType = {id: Date.now(), ...location}
+    setLocations([...locations, newLocation]);
   }
 
   function deleteLocation(index: number) {
     setLocations(locations.filter((_, i) => i !== index));
+  }
+
+  function updateLocation(id: number, updatedLocation: Omit<marsLocationType, 'id'>) {
+    setLocations(locations.map(location => 
+      location.id === id ? { ...location, ...updatedLocation } : location
+    ));
   }
 
   return (
@@ -33,6 +41,7 @@ export function MarsProvider({ children }: MarsContextProviderProps) {
         locations,
         addLocation,
         deleteLocation,
+        updateLocation,
       }}
     >
       {children}
