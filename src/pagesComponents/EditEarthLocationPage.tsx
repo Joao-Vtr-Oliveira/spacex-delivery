@@ -4,6 +4,7 @@ import { EarthContext } from '@/contexts/earthContext';
 import { earthLocationType } from '@/types/earthLocationType';
 import { PageParams } from '@/types/pageParams';
 import { checkEarthFields } from '@/utils/checkFields';
+import { checkZipcode } from '@/utils/checkInfo';
 import toastHelper from '@/utils/toastHelper';
 import {
 	Box,
@@ -37,6 +38,7 @@ const EditEarthLocationPage = ({ params }: PageParams) => {
 	const updateLocation = () => {
 		const check = checkEarthFields(location);
 		if (!check) return toast(toastHelper('blankFields'));
+		if(checkZipcode(earthContext?.locations, location.zipCode)) return toast(toastHelper('zipCodeInUse'));
 		earthContext.updateLocation(location.id, location);
 		toast(toastHelper('updated'));
 		push('/');

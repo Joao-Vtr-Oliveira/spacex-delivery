@@ -3,6 +3,7 @@
 import { EarthContext } from '@/contexts/earthContext';
 import { earthLocationType } from '@/types/earthLocationType';
 import { checkEarthFields } from '@/utils/checkFields';
+import { checkZipcode } from '@/utils/checkInfo';
 import { earthLocationBase } from '@/utils/earthLocationBase';
 import toastHelper from '@/utils/toastHelper';
 import {
@@ -27,10 +28,12 @@ const AddNewEarthLocationPage = () => {
 
 	const { push } = useRouter();
 	const earthContext = useContext(EarthContext);
+	if(!earthContext) return 'error';
 
 	const addLocation = () => {
 		const check = checkEarthFields(location);
 		if (!check) return toast(toastHelper('blankFields'));
+		if(checkZipcode(earthContext?.locations, location.zipCode)) return toast(toastHelper('zipCodeInUse'));
 		earthContext?.addLocation(location);
 		toast(toastHelper('added'));
 		push('/');
