@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Home() {
 
 	return (
-		<Box className='flex min-h-screen h-screen w-screen flex-col items-center justify-center p-24'>
+		<Box className='flex min-h-screen h-screen w-screen flex-col items-center justify-center'>
       <HomePage />
 		</Box>
 	);
