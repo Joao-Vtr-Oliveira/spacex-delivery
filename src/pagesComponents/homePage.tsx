@@ -164,7 +164,7 @@ const HomePage = () => {
 									>
 										Delete
 									</Button>
-									<Button size={'sm'} colorScheme='yellow' color='white'>
+									<Button size={'sm'} colorScheme='yellow' color='white' onClick={() => push(`/mars/edit/${location.id}`)}>
 										Edit
 									</Button>
 								</Box>
