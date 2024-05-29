@@ -1,6 +1,7 @@
 'use client';
 import { MarsContext } from '@/contexts/marsContext';
 import { marsLocationType } from '@/types/marsLocationType';
+import { checkMarsFields } from '@/utils/checkFields';
 import { marsLocationBase } from '@/utils/marsLocationBase';
 import { Box, Button, Heading, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
@@ -13,6 +14,9 @@ const AddNewMarsLocationPage = () => {
 	const marsContext = useContext(MarsContext);
 
 	const addLocation = () => {
+		const check = checkMarsFields(location);
+		if (!check) return alert('Please, fill all the fields');
+		if(location.code.length > 4) return alert('The code must have 4 chars.');
 		marsContext?.addLocation(location);
 		push('/');
 	};
@@ -45,7 +49,7 @@ const AddNewMarsLocationPage = () => {
 				/>
 			</Box>
 			<Box display='flex' justifyContent='center' gap={3}>
-				<Button colorScheme='green' onClick={addLocation}>
+				<Button colorScheme='green' isDisabled={!checkMarsFields(location)} onClick={addLocation}>
 					Add Location
 				</Button>
 				<Button colorScheme='red' onClick={() => push('/')}>
