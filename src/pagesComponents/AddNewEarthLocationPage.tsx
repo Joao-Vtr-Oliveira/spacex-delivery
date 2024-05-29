@@ -2,13 +2,9 @@
 
 import { EarthContext } from '@/contexts/earthContext';
 import { earthLocationType } from '@/types/earthLocationType';
+import { checkEarthFields } from '@/utils/checkFields';
 import { earthLocationBase } from '@/utils/earthLocationBase';
-import {
-	Box,
-	Button,
-	Heading,
-	Input,
-} from '@chakra-ui/react';
+import { Box, Button, Heading, Input } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 
@@ -17,12 +13,14 @@ const AddNewEarthLocationPage = () => {
 		useState<earthLocationType>(earthLocationBase);
 
 	const { push } = useRouter();
-  const earthContext = useContext(EarthContext);
+	const earthContext = useContext(EarthContext);
 
-  const addLocation = () => {
-    earthContext?.addLocation(location);
-    push('/')
-  }
+	const addLocation = () => {
+		const check = checkEarthFields(location);
+		if (!check) return alert('Please, fill all the fields');
+		earthContext?.addLocation(location);
+		push('/');
+	};
 
 	return (
 		<Box>
@@ -102,7 +100,13 @@ const AddNewEarthLocationPage = () => {
 				/>
 			</Box>
 			<Box display='flex' justifyContent='center' gap={3}>
-				<Button colorScheme='green' onClick={addLocation}>Add Location</Button>
+				<Button
+					colorScheme='green'
+					isDisabled={!checkEarthFields(location)}
+					onClick={addLocation}
+				>
+					Add Location
+				</Button>
 				<Button colorScheme='red' onClick={() => push('/')}>
 					Cancel
 				</Button>
