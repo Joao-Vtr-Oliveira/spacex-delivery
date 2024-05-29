@@ -2,6 +2,7 @@
 
 import { EarthContext } from '@/contexts/earthContext';
 import { MarsContext } from '@/contexts/marsContext';
+import toastHelper from '@/utils/toastHelper';
 import {
 	Box,
 	Button,
@@ -11,6 +12,7 @@ import {
 	CardHeader,
 	Heading,
 	Text,
+	useToast,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
@@ -18,6 +20,8 @@ import { useContext, useState } from 'react';
 const HomePage = () => {
 	const [page, setPage] = useState(true);
 	// true -> Earth
+
+	const toast = useToast();
 
 	const marsContext = useContext(MarsContext);
 	const earthContext = useContext(EarthContext);
@@ -28,7 +32,7 @@ const HomePage = () => {
 	}
 
 	return (
-		<Card w={['100%', '100%', '100%', '80%', '90%', '60%']} h={['100%', '90%']}>
+		<Card w={['100vw', '70vw', '80%', '90%', '60%']} h={['100vh', '90%']}>
 			<CardHeader textAlign='center'>
 				<Heading fontFamily='monospace'>Address list</Heading>
 				<Box display='flex' justifyContent='center' mb={5} gap={2}>
@@ -109,7 +113,7 @@ const HomePage = () => {
 									<Button
 										size={'sm'}
 										colorScheme='red'
-										onClick={() => earthContext.deleteLocation(index)}
+										onClick={() => [earthContext.deleteLocation(index), toast(toastHelper('deleted'))]}
 									>
 										Delete
 									</Button>
@@ -160,7 +164,7 @@ const HomePage = () => {
 									<Button
 										size={'sm'}
 										colorScheme='red'
-										onClick={() => marsContext.deleteLocation(index)}
+										onClick={() => [marsContext.deleteLocation(index), toast(toastHelper('deleted'))]}
 									>
 										Delete
 									</Button>
