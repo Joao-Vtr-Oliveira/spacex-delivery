@@ -4,7 +4,8 @@ import { EarthContext } from '@/contexts/earthContext';
 import { earthLocationType } from '@/types/earthLocationType';
 import { PageParams } from '@/types/pageParams';
 import { checkEarthFields } from '@/utils/checkFields';
-import { Box, Button, Heading, Input } from '@chakra-ui/react';
+import toastHelper from '@/utils/toastHelper';
+import { Box, Button, Heading, Input, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 
@@ -16,7 +17,8 @@ const EditEarthLocationPage = ({ params }: PageParams) => {
 	const actualLocation = earthContext.locations.filter(
 		(item) => item.id === Number(params.id)
 	)[0];
-	console.log(actualLocation);
+	
+	const toast = useToast();
 
 	const [location, setLocation] = useState<earthLocationType>(actualLocation);
 
@@ -24,8 +26,9 @@ const EditEarthLocationPage = ({ params }: PageParams) => {
 
 	const updateLocation = () => {
 		const check = checkEarthFields(location);
-		if (!check) return alert('Please, fill all the fields');
+		if (!check) return toast(toastHelper('blankFields'));
 		earthContext.updateLocation(location.id, location);
+		toast(toastHelper('updated'));
 		push('/');
 	};
 

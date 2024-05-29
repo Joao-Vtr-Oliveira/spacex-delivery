@@ -4,7 +4,8 @@ import { EarthContext } from '@/contexts/earthContext';
 import { earthLocationType } from '@/types/earthLocationType';
 import { checkEarthFields } from '@/utils/checkFields';
 import { earthLocationBase } from '@/utils/earthLocationBase';
-import { Box, Button, Heading, Input } from '@chakra-ui/react';
+import toastHelper from '@/utils/toastHelper';
+import { Box, Button, Heading, Input, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 
@@ -12,13 +13,16 @@ const AddNewEarthLocationPage = () => {
 	const [location, setLocation] =
 		useState<earthLocationType>(earthLocationBase);
 
+	const toast = useToast();
+
 	const { push } = useRouter();
 	const earthContext = useContext(EarthContext);
 
 	const addLocation = () => {
 		const check = checkEarthFields(location);
-		if (!check) return alert('Please, fill all the fields');
+		if (!check) return toast(toastHelper('blankFields'));
 		earthContext?.addLocation(location);
+		toast(toastHelper('added'));
 		push('/');
 	};
 
