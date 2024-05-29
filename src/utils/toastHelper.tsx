@@ -1,4 +1,4 @@
-type info = 'added' | 'blankFields' | 'wrongCode' | 'updated' | 'deleted';
+type info = 'added' | 'blankFields' | 'wrongCode' | 'updated' | 'deleted' | 'codeInUse' | 'zipCodeInUse';
 
 type toastType = {
   title: string;
@@ -45,6 +45,19 @@ const toastHelper = (info: info): toastType => {
       finalToast.description = 'The location was deleted!';
       finalToast.status = 'warning';
       finalToast.duration = 3000;
+      break;
+    case 'codeInUse':
+      finalToast.title = 'Code already in use!';
+      finalToast.description = 'There is another location that has that code!';
+      finalToast.status = 'warning';
+      finalToast.duration = 3000;
+      break;
+    case 'zipCodeInUse':
+      finalToast.title = 'Zip code already in use!';
+      finalToast.description = 'There is another location that has that zip code!';
+      finalToast.status = 'warning';
+      finalToast.duration = 3000;
+      break;
   }
 
 	return finalToast;
